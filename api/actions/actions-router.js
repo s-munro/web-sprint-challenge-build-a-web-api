@@ -33,7 +33,14 @@ router.post("/", validateAction, (req, res) => {
 });
 
 router.put("/:id", validateActionId, validateAction, (req, res) => {
-  // get code here
+  Actions.update(req.params.id, req.body)
+    .then((action) => {
+      res.status(201).json(action);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Error updating action" });
+    });
 });
 
 router.delete("/:id", validateActionId, (req, res) => {
