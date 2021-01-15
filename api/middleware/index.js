@@ -1,5 +1,5 @@
 const Actions = require("../actions/actions-model");
-const Projects = require("../projects/projects-router");
+const Projects = require("../projects/projects-model");
 
 const validateActionId = (req, res, next) => {
   const { id } = req.params;
@@ -52,8 +52,8 @@ const validateProjectId = (req, res, next) => {
 };
 
 const validateProject = (req, res, next) => {
-  const { name, description } = req.body;
-  if (!name || !description) {
+  // const { name, description } = req.body;
+  if (!req.body.name || !req.body.description) {
     res
       .status(400)
       .json({ message: "Project is missing key data (name or description)" });

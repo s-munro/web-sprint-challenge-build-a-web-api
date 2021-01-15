@@ -5,6 +5,8 @@ const Projects = require("./projects-model");
 
 const router = express.Router();
 
+const { validateProjectId, validateProject } = require("../middleware/");
+
 router.get("/", (req, res) => {
   Projects.get()
     .then((projects) => {
@@ -16,19 +18,33 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", validateProjectId, (req, res) => {
+  Projects.get(req.params.id)
+    .then((project) => {
+      res.status(200).json(project);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Error getting project" });
+    });
+});
+
+router.post("/", validateProject, (req, res) => {
+  Projects.insert(req.body)
+    .then((project) => {
+      res.status(201).json(project);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Error adding project" });
+    });
+});
+
+router.put("/:id", validateProjectId, validateProject, (req, res) => {
   // get code
 });
 
-router.post("/", (req, res) => {
-  // get code
-});
-
-router.put("/:id", (req, res) => {
-  // get code
-});
-
-router.delete("/:id", (req, res) => {
+router.delete("/:id", validateProjectId, (req, res) => {
   // get code
 });
 
