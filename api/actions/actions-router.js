@@ -44,6 +44,13 @@ router.put("/:id", validateActionId, validateAction, (req, res) => {
 });
 
 router.delete("/:id", validateActionId, (req, res) => {
-  // get code here
+  Actions.remove(req.params.id)
+    .then(() => {
+      res.status(200).json({ message: "successfully deleted" });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Error deleting action" });
+    });
 });
 module.exports = router;
