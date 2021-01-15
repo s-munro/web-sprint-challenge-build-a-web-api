@@ -28,6 +28,7 @@ router.post("/", validateAction, (req, res) => {
       res.status(201).json(action);
     })
     .catch((err) => {
+      console.log(err);
       res.status(500).json({ error: "Error adding action" });
     });
 });
@@ -53,4 +54,5 @@ router.delete("/:id", validateActionId, (req, res) => {
       res.status(500).json({ message: "Error deleting action" });
     });
 });
+
 module.exports = router;
