@@ -52,7 +52,14 @@ const validateProjectId = (req, res, next) => {
 };
 
 const validateProject = (req, res, next) => {
-  // validate
+  const { name, description } = req.body;
+  if (!name || !description) {
+    res
+      .status(400)
+      .json({ message: "Project is missing key data (name or description)" });
+  } else {
+    next();
+  }
 };
 
 module.exports = {
