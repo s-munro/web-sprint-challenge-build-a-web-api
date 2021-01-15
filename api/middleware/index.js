@@ -22,7 +22,15 @@ const validateActionId = (req, res, next) => {
 };
 
 const validateAction = (req, res, next) => {
-  // validate
+  const { project_id, description, notes } = req.body;
+  if (!project_id || !description || !notes) {
+    res.status(400).json({
+      message:
+        "Action is missing a key data field (project_id, description, and/or notes)",
+    });
+  } else {
+    next();
+  }
 };
 
 const validateProjectId = (req, res, next) => {

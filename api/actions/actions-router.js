@@ -19,11 +19,17 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", validateActionId, (req, res) => {
-  // get code here
+  res.status(200).json(req.action);
 });
 
 router.post("/", validateAction, (req, res) => {
-  // get code here
+  Actions.insert(req.body)
+    .then((action) => {
+      res.status(201).json(action);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: "Error adding action" });
+    });
 });
 
 router.put("/:id", validateActionId, validateAction, (req, res) => {
