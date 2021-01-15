@@ -41,7 +41,14 @@ router.post("/", validateProject, (req, res) => {
 });
 
 router.put("/:id", validateProjectId, validateProject, (req, res) => {
-  // get code
+  Projects.update(req.params.id, req.body)
+    .then((project) => {
+      res.status(200).json(project);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "error updating project" });
+    });
 });
 
 router.delete("/:id", validateProjectId, (req, res) => {
